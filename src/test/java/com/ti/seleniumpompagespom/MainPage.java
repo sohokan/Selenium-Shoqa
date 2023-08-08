@@ -5,12 +5,15 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainPage {
 
     WebDriver driver = DriverFactory.getInstance().getDriver();
-//    clothesList clothes ;
+
+
+    List<clothesList> clotheList;
 
 
 

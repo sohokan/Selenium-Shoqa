@@ -198,7 +198,7 @@ public class SearchitemPage extends MainPage {
 
                          List<WebElement> twoprices= driver.findElements(By.xpath(newPricexpath));
                          twoprices.forEach(s -> setNewPrice.add(s.getText()));
-                         System.out.println("New Price"+ setNewPrice.get(setNewPrice.size() - 1));
+                         System.out.println("New Price"+ setNewPrice.get(setNewPrice.size() - 1).replace("₹", ""));
 
 
 
@@ -214,6 +214,10 @@ public class SearchitemPage extends MainPage {
 
                         System.out.println("pricerange"+driver.findElement(By.xpath(stringclothpricerng)).getText());
 
+                         String[] Pricesplit = driver.findElement(By.xpath(stringclothpricerng)).getText().split(" – ");
+
+                         System.out.println("Hightprice"+Pricesplit[0].replace("₹", ""));
+                         System.out.println("Lowest"+Pricesplit[1].replace("₹", ""));
 
 
 //                    clotheList.add(new clothesList(clothname.getText(), clothtype.getText(), clothprice.getText(),
@@ -226,7 +230,7 @@ public class SearchitemPage extends MainPage {
                     else {
 
 //                         clothprice= driver.findElement(By.xpath(highestclothxpath));
-                        System.out.println("normal price"+clothprice.getText());
+                        System.out.println("normal price"+clothprice.getText().replace("₹", ""));
 
 
                         // clotheList.add(new clothesList(highestclothxpath, highestclothxpath,
@@ -284,7 +288,7 @@ public class SearchitemPage extends MainPage {
 
 
 
-    public void sort(List<clothesList> clotheList)
+    public void sort()
 
     {
         System.out.println("sorting price");
@@ -302,14 +306,14 @@ public class SearchitemPage extends MainPage {
 		 */
     }
 
-    public void cheapestclothe(List<clothesList> clotheList)
+    public void cheapestclothe()
     {
         WebDriverWait wait2 = new WebDriverWait(driver,Duration.ofSeconds(10));
 
         System.out.println("cheap clothes");
         System.out.println(clotheList.get(0).clothe_price);
         System.out.println(clotheList.get(0).clothe_name);
-        System.out.println(clotheList.get(0).clothe_img);
+        System.out.println(clotheList.get(0).clothe_lowestprice);
         String clothe_page_location=clotheList.get(0).page_number_icon;
         System.out.println("clothes_pagination_location="+clothe_page_location);
         int paginationsize=Pagination_number.size();
@@ -320,33 +324,33 @@ public class SearchitemPage extends MainPage {
             System.out.println("clothesnumbericon size: "+clothesnumbericon);
             WebElement clothpaginationlocation = wait2.until(ExpectedConditions.elementToBeClickable(By.xpath(clothe_page_location)));
             clothpaginationlocation.click();
-            WebElement clothimg = wait2.until(ExpectedConditions.elementToBeClickable(By.xpath(clotheList.get(0).clothe_img)));
+            WebElement clothimg = wait2.until(ExpectedConditions.elementToBeClickable(By.xpath(clotheList.get(0).clothe_lowestprice)));
             clothimg.click();
         }
         else
         {
-            WebElement clothimg = wait2.until(ExpectedConditions.elementToBeClickable(By.xpath(clotheList.get(0).clothe_img)));
+            WebElement clothimg = wait2.until(ExpectedConditions.elementToBeClickable(By.xpath(clotheList.get(0).clothe_lowestprice)));
             clothimg.click();
         }
     }
 
-    public void expensiveclothe(List<clothesList> clotheList)
+    public void expensiveclothe()
     {
 		/*WebDriverWait wait2 = new WebDriverWait(driver, 20);
 		System.out.println("expensive clothes");
 		System.out.println("clothes list size: "+(clotheList.size()));
 		System.out.println(clotheList.get(clotheList.size() - 1).clothe_price);
 		System.out.println(clotheList.get(clotheList.size() - 1).clothe_name);
-		System.out.println(clotheList.get(clotheList.size() - 1).clothe_img);
+		System.out.println(clotheList.get(clotheList.size() - 1).clothe_lowestprice);
 		WebElement icon = wait2.until(
-				ExpectedConditions.elementToBeClickable(By.xpath(clotheList.get(clotheList.size() - 1).clothe_img)));
+				ExpectedConditions.elementToBeClickable(By.xpath(clotheList.get(clotheList.size() - 1).clothe_lowestprice)));
 
 		icon.click();*/
         WebDriverWait wait2 = new WebDriverWait(driver,Duration.ofSeconds(10));
         System.out.println("expensive clothes");
         System.out.println(clotheList.get(clotheList.size()-1).clothe_price);
         System.out.println(clotheList.get(clotheList.size()-1 ).clothe_name);
-        System.out.println(clotheList.get(clotheList.size()-1).clothe_img);
+        System.out.println(clotheList.get(clotheList.size()-1).clothe_lowestprice);
         String clothe_page_location=clotheList.get(clotheList.size()).page_number_icon;
         System.out.println("clothes_pagination_location="+clothe_page_location);
         int paginationsize=driver.findElements(By.xpath("/html/body/div[2]/div[2]/div[2]/div/nav/ul/*")).size();
@@ -357,12 +361,12 @@ public class SearchitemPage extends MainPage {
             System.out.println("clothesnumbericon size: "+clothesnumbericon);
             WebElement clothpaginationlocation = wait2.until(ExpectedConditions.elementToBeClickable(By.xpath(clothe_page_location)));
             clothpaginationlocation.click();
-            WebElement clothimg = wait2.until(ExpectedConditions.elementToBeClickable(By.xpath(clotheList.get(clotheList.size()-1 ).clothe_img)));
+            WebElement clothimg = wait2.until(ExpectedConditions.elementToBeClickable(By.xpath(clotheList.get(clotheList.size()-1 ).clothe_lowestprice)));
             clothimg.click();
         }
         else
         {
-            WebElement clothimg = wait2.until(ExpectedConditions.elementToBeClickable(By.xpath(clotheList.get(clotheList.size()-1).clothe_img)));
+            WebElement clothimg = wait2.until(ExpectedConditions.elementToBeClickable(By.xpath(clotheList.get(clotheList.size()-1).clothe_lowestprice)));
             clothimg.click();
         }
 
