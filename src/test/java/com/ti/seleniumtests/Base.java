@@ -1,19 +1,18 @@
 package com.ti.seleniumtests;
 
 
-
-import com.ti.seleniumpompagespom.SearchitemPage;
-import org.openqa.selenium.*;
-import org.ti.base.BrowserType;
-import  org.ti.base.DriverFactory;
 import com.ti.seleniumpompagespom.LoginPage;
+import com.ti.seleniumpompagespom.SearchitemPage;
 
 import org.openqa.selenium.Cookie;
-
+import org.openqa.selenium.JavascriptExecutor;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
+import org.ti.base.BrowserType;
+import org.ti.base.DriverFactory;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Base {
@@ -25,6 +24,9 @@ public class Base {
     LoginPage loginPage;
 
     SearchitemPage searchitemPage;
+
+
+
 
     @BeforeTest
     @Parameters("browser")

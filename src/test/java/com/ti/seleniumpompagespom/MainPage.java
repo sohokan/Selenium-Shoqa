@@ -13,7 +13,9 @@ public class MainPage {
     WebDriver driver = DriverFactory.getInstance().getDriver();
 
 
-    List<clothesList> clotheList;
+
+
+
 
 
 

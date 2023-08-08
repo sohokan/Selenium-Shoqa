@@ -30,6 +30,18 @@ public class ShoppingQA extends Base{
 
         searchitemPage.identifyClothes();
 
+
+    }
+
+
+    @Test (priority = 4,enabled=true)
+
+    public void SortbyPrice()
+    {
+
+        searchitemPage.sortPrice();
+
+
     }
 
 
