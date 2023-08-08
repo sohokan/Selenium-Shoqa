@@ -1,10 +1,7 @@
 package com.ti.seleniumpompagespom;
 
 import java.time.Duration;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -101,7 +98,9 @@ public class SearchitemPage extends MainPage {
 
             WebElement clothname;
             WebElement clothtype;
-            WebElement clothprice;
+            WebElement clothprice = null;
+            WebElement discountclothprice;
+            WebElement clothpricerng;
 
             String clothnamestr1 = "div[class='products noo-row'] div:nth-child(";
 
@@ -159,26 +158,83 @@ public class SearchitemPage extends MainPage {
                     String stringclothprice = new StringBuilder(clothprice1).append(item_num).append(clothprice2)
                             .toString();
 //               System.out.println(stringclothprice);
-
-                    String stringclothpricerng = new StringBuilder(clothprice1).append(item_num).append("]/div/span[3]")
+                    String normalprice =
+                    new StringBuilder("(//div[contains(@class,'noo-product-inner')])[").append(item_num).append("]//child::span[contains(@class,'amount')]")
                             .toString();
 
-                    String stringclothpricedisc = new StringBuilder(clothprice1).append(item_num)
-                            .append("]/div/span[3]/ins/span").toString();
 
-                    // WebElement clothname =
-                    // wait2.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html[1]/body[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]/h3[1]/a[1]")));
+                    String stringclothpricerng = new StringBuilder("(//div[contains(@class,'noo-product-inner')])[").append(item_num).append("]//child::span[contains(text(),'–')]")
+                            .toString();
+
+
+
+                    String highestclothxpath = new StringBuilder("(//div[contains(@class,'noo-product-inner')])[").append(item_num)
+                            .append("]//child:: del[contains(@aria-hidden,'true')]").toString();
+
+
                     clothname = wait2
                             .until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(stringclothname)));
                     clothtype = wait2
                             .until(ExpectedConditions.presenceOfElementLocated(By.xpath(stringclothtype)));
-                    clothprice = wait2
-                            .until(ExpectedConditions.presenceOfElementLocated(By.xpath(stringclothprice)));
 
+                     clothprice =
+                            wait2.until(ExpectedConditions.presenceOfElementLocated(By.xpath(normalprice)));
 
                     System.out.println(clothname.getText());
                     System.out.println(clothtype.getText());
-                    System.out.println(clothprice.getText());
+
+
+
+
+
+                     if ((driver.findElements(By.xpath(highestclothxpath)).size()) != 0) {
+
+                         ArrayList<String> setNewPrice = new ArrayList<>();
+//                        System.out.println(highestclothxpath);
+
+                         String newPricexpath = new StringBuilder("(//div[contains(@class,'noo-product-inner')])[").append(item_num)
+                                 .append("]//child:: span[contains(@class,'woocommerce-Price-amount amount')]").toString();
+
+
+                         List<WebElement> twoprices= driver.findElements(By.xpath(newPricexpath));
+                         twoprices.forEach(s -> setNewPrice.add(s.getText()));
+                         System.out.println("New Price"+ setNewPrice.get(setNewPrice.size() - 1));
+
+
+
+//                        System.out.println("Old price"+driver.findElement(By.xpath(highestclothxpath)).getText());
+//                         System.out.println("New price"+clothprice.getText());
+//
+//                    clotheList.add(new clothesList(clothname.getText(), clothtype.getText(), clothprice.getText(),
+//                            clothimg, clothicon,pagenumbericon));
+
+                    } else if ((driver.findElements(By.xpath(stringclothpricerng)).size()) != 0) {
+
+                         System.out.println(stringclothpricerng);
+
+                        System.out.println("pricerange"+driver.findElement(By.xpath(stringclothpricerng)).getText());
+
+
+
+//                    clotheList.add(new clothesList(clothname.getText(), clothtype.getText(), clothprice.getText(),
+//                            clothimg, clothicon,pagenumbericon));
+
+
+                    }
+
+
+                    else {
+
+//                         clothprice= driver.findElement(By.xpath(highestclothxpath));
+                        System.out.println("normal price"+clothprice.getText());
+
+
+                        // clotheList.add(new clothesList(highestclothxpath, highestclothxpath,
+                        // highestclothxpath, highestclothxpath, highestclothxpath));
+
+//                    clotheList.add(new clothesList(clothname.getText(), clothtype.getText(), clothprice.getText(),
+//                            clothimg, clothicon,pagenumbericon));
+                    }
 
 
                     if (item_num == 20) {
@@ -201,57 +257,6 @@ public class SearchitemPage extends MainPage {
 
                     }
 
-
-
-
-
-
-
-              /*  String pagenumbericon=new StringBuilder("//a[contains(text(),'").append(page_number)
-                        .append("')]").toString();
-
-                System.out.println("page number icon: "+pagenumbericon);*/
-/*
-                if ((driver.findElements(By.xpath(stringclothprice)).size()) != 0)
-
-                {
-                    System.out.println("normalprice");
-                    WebElement clothprice = wait2
-                            .until(ExpectedConditions.presenceOfElementLocated(By.xpath(stringclothprice)));
-
-                    System.out.println(clothprice.getText());
-                    // clotheList.add(new clothesList(stringclothpricedisc, stringclothpricedisc,
-                    // stringclothpricedisc, stringclothpricedisc, stringclothpricedisc));
-
-                    clotheList.add(new clothesList(clothname.getText(), clothtype.getText(), clothprice.getText(),
-                            clothimg, clothicon,pagenumbericon));
-
-                } else if ((driver.findElements(By.xpath(stringclothpricedisc)).size()) != 0) {
-                    //System.out.println(stringclothpricedisc);
-                    System.out.println("discountprice");
-                    WebElement clothprice = wait2
-                            .until(ExpectedConditions.presenceOfElementLocated(By.xpath(stringclothpricedisc)));
-
-                    clotheList.add(new clothesList(clothname.getText(), clothtype.getText(), clothprice.getText(),
-                            clothimg, clothicon,pagenumbericon));
-
-                } else if ((driver.findElements(By.xpath(stringclothpricerng)).size()) != 0) {
-                    System.out.println(stringclothpricerng);
-                    System.out.println("pricerange");
-                    WebElement clothprice = wait2
-                            .until(ExpectedConditions.presenceOfElementLocated(By.xpath(stringclothpricerng)));
-                    System.out.println(clothprice.getText());
-
-                    clotheList.add(new clothesList(clothname.getText(), clothtype.getText(), clothprice.getText(),
-                            clothimg, clothicon,pagenumbericon));
-
-
-                }
-
-
-                else {
-                    // do nothing
-                }*/
 
                     totalitems ++;
                 }
