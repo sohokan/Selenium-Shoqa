@@ -2,10 +2,10 @@ package com.ti.seleniumtests;
 
 import org.testng.annotations.Test;
 
-public class ShoppingQA extends Base{
+public class ShoppingQA extends Base {
 
 
-    @Test (priority = 1,enabled=true)
+    @Test(priority = 1, enabled = true)
     void loginWithRightCredentials() {
 
 
@@ -14,19 +14,17 @@ public class ShoppingQA extends Base{
     }
 
 
-    @Test (priority = 2,enabled=true)
+    @Test(priority = 2, enabled = true)
 
-    public void searchCloth()
-    {
+    public void ClothSearch() {
 
         searchitemPage.searchItem("shirt");
 
     }
 
-    @Test (priority = 3,enabled=true)
+    @Test(priority = 3, enabled = true)
 
-    public void AllClothesFound()
-    {
+    public void AllClothesFoundSearch() {
 
         searchitemPage.identifyClothes();
 
@@ -34,10 +32,9 @@ public class ShoppingQA extends Base{
     }
 
 
-    @Test (priority = 4,enabled=true)
+    @Test(priority = 4, enabled = true)
 
-    public void SortbyPrice()
-    {
+    public void SortbyLowestPriceSearch() {
 
         searchitemPage.sortPrice();
 
@@ -45,8 +42,17 @@ public class ShoppingQA extends Base{
     }
 
 
+    @Test(priority = 5, enabled = true)
 
+    public void MedianPriceSearch() {
+        searchitemPage.MeanNumber();
 
+    }
+    @Test(priority = 6, enabled = true)
 
+    public void CheapestPriceSeach() {
+        searchitemPage.cheapestClothe();
+
+    }
 
 }
