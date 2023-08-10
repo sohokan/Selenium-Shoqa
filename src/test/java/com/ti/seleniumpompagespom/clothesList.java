@@ -6,14 +6,14 @@ public class clothesList extends MainPage {
 
     public String clothe_name;
     public String clothe_type;
-    public double clothe_price;
-    public double clothe_lowestprice;
+    public float clothe_price;
+    public float clothe_lowestprice;
     public String clothe_icon;
     public int page_number_icon;
 
 
-    public clothesList(String clothe_name, String clothe_type, double clothe_price,
-                       double clothe_lowestprice, String clothe_icon, int page_number_icon) {
+    public clothesList(String clothe_name, String clothe_type, float clothe_price,
+                       float clothe_lowestprice, String clothe_icon, int page_number_icon) {
         this.clothe_name = clothe_name;
         this.clothe_type = clothe_type;
         this.clothe_price = clothe_price;
@@ -38,19 +38,19 @@ public class clothesList extends MainPage {
         this.clothe_type = clothe_type;
     }
 
-    public double getClothe_price() {
+    public float getClothe_price() {
         return clothe_price;
     }
 
-    public void setClothe_price(double clothe_price) {
+    public void setClothe_price(float clothe_price) {
         this.clothe_price = clothe_price;
     }
 
-    public double getClothe_lowestprice() {
+    public float getClothe_lowestprice() {
         return clothe_lowestprice;
     }
 
-    public void setClothe_lowestprice(double clothe_lowestprice) {
+    public void setClothe_lowestprice(float clothe_lowestprice) {
         this.clothe_lowestprice = clothe_lowestprice;
     }
 

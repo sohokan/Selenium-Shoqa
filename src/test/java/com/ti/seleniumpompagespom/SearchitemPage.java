@@ -45,7 +45,7 @@ public class SearchitemPage extends MainPage {
     int CurrentPageselected;
 
     List<clothesList> clothesList = new ArrayList<>();
-    List<Double> RegularClothPrice;
+    List<Float> RegularClothPrice;
 
 
     public void searchItem(String searchclothname) {
@@ -134,7 +134,7 @@ public class SearchitemPage extends MainPage {
             CurrentPageselected = 1;
             Boolean ExistRightarrow;
             do {
-                System.out.println("Current :" + num_pages);
+                System.out.println("Current Page :" + num_pages);
 
 
                 item_total = driver.findElements(total_products_perpage).size();
@@ -309,7 +309,7 @@ public class SearchitemPage extends MainPage {
 
         int len = clothesList.size();
 
-        double median;
+        float median;
 
 
 
@@ -332,9 +332,11 @@ public class SearchitemPage extends MainPage {
         Integer firstIndex = RegularClothPrice.stream().filter(v -> v.equals(median)).map(v -> RegularClothPrice.indexOf(v)).findFirst()
                 .orElse(-1);
 
+        System.out.println("Index:"+firstIndex.intValue());
         //print the median and it's index
         System.out.println("Cloth name" + clothesList.get(firstIndex.intValue()).clothe_name + "\n Cloth Price" + clothesList.get(firstIndex.intValue()).clothe_price);
 
+        clickCloth(clothesList.get(firstIndex.intValue()).clothe_icon,clothesList.get(firstIndex.intValue()).page_number_icon);
 
     }
 
@@ -377,14 +379,8 @@ public class SearchitemPage extends MainPage {
 
 		icon.click();*/
         WebDriverWait wait2 = new WebDriverWait(driver, Duration.ofSeconds(10));
-        System.out.println("expensive clothes");
-//        System.out.println(clotheList.get(clotheList.size()-1).clothe_price);
-//        System.out.println(clotheList.get(clotheList.size()-1 ).clothe_name);
-//        System.out.println(clotheList.get(clotheList.size()-1).clothe_lowestprice);
-//        String clothe_page_location=clotheList.get(clotheList.size()).page_number_icon;
-//        System.out.println("clothes_pagination_location="+clothe_page_location);
-        int paginationsize = driver.findElements(By.xpath("/html/body/div[2]/div[2]/div[2]/div/nav/ul/*")).size();
-        System.out.println("paginationsize: " + paginationsize);
+
+    /*    System.out.println("paginationsize: " + paginationsize);
         if (paginationsize > 0) {
 //            int clothesnumbericon = driver.findElements(By.xpath(clothe_page_location)).size();
 //            System.out.println("clothesnumbericon size: "+clothesnumbericon);
@@ -396,54 +392,12 @@ public class SearchitemPage extends MainPage {
 //            WebElement clothimg = wait2.until(ExpectedConditions.elementToBeClickable(By.xpath(clotheList.get(clotheList.size()-1).clothe_lowestprice)));
 //            clothimg.click();
         }
-
-
-    }
-
-
-    public void paginationbynext() {
-
-
-        Boolean isPresenttotal_pagination = Pagesize != 0;
-
-        System.out.println("Theres pagination? " + isPresenttotal_pagination);
-
-        wait2 = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait2.until(ExpectedConditions.presenceOfElementLocated(total_products_perpage));
-
-
-        //wait2.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("/html/body/div[2]/div[2]/div[2]/div/nav/ul")));
-        int paginationsize = Pagination_number.size();
-        // int paginationsize=driver.findElements(By.xpath("//ul[@class='page-numbers']")).size();
-        System.out.println(paginationsize);
-
-        if (Pagesize == 0) {
-
-            identifyClothes();
-
-
-        }
-
-
-        //check pagination to click on page 2 number
-        else if (isPresenttotal_pagination) {
-            //*[contains(@class,'page-numbers')and contains(text(),*)]
-
-            for (int num_pages = 2; num_pages <= (Pagination_number.size() - 1); num_pages++) {
-
-                String pageNumberxpath = new StringBuilder(pageNumberxpath1).append(num_pages).append(pageNumberxpath2)
-                        .toString();
-                pagenumbericon = driver.findElement(By.xpath(pageNumberxpath));
-
-                pagenumbericon.click();
-
-            }
-
-
-        }
-
+*/
 
     }
+
+
+
 
     public boolean isElementPresent(String id) {
         try {
@@ -454,6 +408,53 @@ public class SearchitemPage extends MainPage {
             return false;
         }
         return true;
+    }
+
+    public void clickCloth(String ClothCss,int PageLocation)
+    {
+
+        Boolean isPresenttotal_pagination = Pagesize != 0;
+
+        System.out.println("Theres pagination? " + isPresenttotal_pagination);
+
+        wait2 = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait2.until(ExpectedConditions.presenceOfElementLocated(total_products_perpage));
+
+
+        //wait2.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("/html/body/div[2]/div[2]/div[2]/div/nav/ul")));
+
+        // int paginationsize=driver.findElements(By.xpath("//ul[@class='page-numbers']")).size();
+
+
+        if (isPresenttotal_pagination) {
+
+
+
+            String pageNumberxpath = new StringBuilder(pageNumberxpath1).append(String.valueOf(PageLocation)).append(pageNumberxpath2) .toString();;
+//
+            pagenumbericon = driver.findElement(By.xpath(pageNumberxpath));
+
+            pagenumbericon.click();
+
+            driver.findElement(By.cssSelector(ClothCss)).click();
+
+
+        }
+
+
+        //check pagination to click on page the corresponding page
+        else {
+            //*[contains(@class,'page-numbers')and contains(text(),*)]
+
+
+            driver.findElement(By.cssSelector(ClothCss)).click();
+
+
+
+        }
+
+
+
     }
 
 
