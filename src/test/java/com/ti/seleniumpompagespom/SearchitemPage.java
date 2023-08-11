@@ -305,7 +305,7 @@ public class SearchitemPage extends MainPage {
             System.out.println("Name: " + clothes.clothe_name);
             System.out.println("Type: " + clothes.clothe_type);
             System.out.println("Normal Price: " + clothes.clothe_price);
-            System.out.println("Lowest Price: " + clothes.clothe_lowestprice);
+//            System.out.println("Lowest Price: " + clothes.clothe_lowestprice);
         }
 
 
@@ -320,11 +320,19 @@ public class SearchitemPage extends MainPage {
 
 
 
-                Comparator.comparing(ShoppingItems::getClothe_price)
-                        .reversed();
+        ItemsList.sort(Comparator.comparing(ShoppingItems::getClothe_price)
+                .reversed());
 
 
         System.out.println("Sorted Prices highest to lowest");
+
+        for (ShoppingItems clothes : ItemsList) {
+            // System.out.println( clothes.getclothe_name());
+            System.out.println("Name: " + clothes.clothe_name);
+            System.out.println("Type: " + clothes.clothe_type);
+            System.out.println("Normal Price: " + clothes.clothe_price);
+//            System.out.println("Lowest Price: " + clothes.clothe_lowestprice);
+        }
 
 
     }
