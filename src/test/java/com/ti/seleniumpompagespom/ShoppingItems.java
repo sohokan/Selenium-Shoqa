@@ -1,8 +1,6 @@
 package com.ti.seleniumpompagespom;
 
-import com.ti.seleniumtests.Base;
-
-public class clothesList extends MainPage {
+public class ShoppingItems {
 
     public String clothe_name;
     public String clothe_type;
@@ -12,8 +10,8 @@ public class clothesList extends MainPage {
     public int page_number_icon;
 
 
-    public clothesList(String clothe_name, String clothe_type, float clothe_price,
-                       float clothe_lowestprice, String clothe_icon, int page_number_icon) {
+    public ShoppingItems(String clothe_name, String clothe_type, float clothe_price,
+                         float clothe_lowestprice, String clothe_icon, int page_number_icon) {
         this.clothe_name = clothe_name;
         this.clothe_type = clothe_type;
         this.clothe_price = clothe_price;

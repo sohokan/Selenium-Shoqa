@@ -3,15 +3,15 @@ package com.ti.seleniumpompagespom;
 import java.time.Duration;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.DoubleStream;
-import java.util.stream.IntStream;
+import java.util.stream.StreamSupport;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+
 
 
 public class SearchitemPage extends MainPage {
@@ -44,7 +44,7 @@ public class SearchitemPage extends MainPage {
 
     int CurrentPageselected;
 
-    List<clothesList> clothesList = new ArrayList<>();
+    List<ShoppingItems> ItemsList = new ArrayList<>();
     List<Float> RegularClothPrice;
 
 
@@ -61,7 +61,7 @@ public class SearchitemPage extends MainPage {
     }
 
 
-    public void identifyClothes() {
+    public void identifyItems() {
 
 
         //WebDriverWait wait2 = new WebDriverWait(driver, 5);
@@ -145,6 +145,8 @@ public class SearchitemPage extends MainPage {
                 int item_num;
                 for (item_num = 1; item_num <= item_total; item_num++) {
 
+                    System.out.printf("Item :%d \n",item_num);
+
 
                     String stringclothname = new StringBuilder(clothnamestr1).append(item_num).append(clothnamestr2)
                             .toString();
@@ -196,7 +198,7 @@ public class SearchitemPage extends MainPage {
 
                         List<WebElement> twoprices = driver.findElements(By.xpath(newPricexpath));
                         twoprices.forEach(s -> setNewPrice.add(s.getText()));
-                        System.out.println("New Price" + setNewPrice.get(setNewPrice.size() - 1).replace("₹", ""));
+                        System.out.println("New Price: " + setNewPrice.get(setNewPrice.size() - 1).replace("₹", ""));
                         OldClothPrice = Float.parseFloat(setNewPrice.get(0).replace("₹", ""));
                         NewClothPrice = Float.parseFloat(setNewPrice.get(setNewPrice.size() - 1).replace("₹", ""));
 
@@ -204,28 +206,28 @@ public class SearchitemPage extends MainPage {
 //                        System.out.println("Old price"+driver.findElement(By.xpath(highestclothxpath)).getText());
 //                         System.out.println("New price"+clothprice.getText());
 //
-//                    clotheList.add(new clothesList(clothname.getText(), clothtype.getText(), clothprice.getText(),
+//                    clotheList.add(new ShoppingItems(clothname.getText(), clothtype.getText(), clothprice.getText(),
 //                            clothimg, clothicon,pagenumbericon));
 
-                        clothesList.add(new clothesList(clothname.getText(), clothtype.getText(), NewClothPrice, OldClothPrice, stringclothname, num_pages));
+                        ItemsList.add(new ShoppingItems(clothname.getText(), clothtype.getText(), NewClothPrice, OldClothPrice, stringclothname, num_pages));
 
 
                     } else if ((driver.findElements(By.xpath(stringclothpricerng)).size()) != 0) {
 
-                        System.out.println(stringclothpricerng);
+//                        System.out.println(stringclothpricerng);
 
                         System.out.println("pricerange" + driver.findElement(By.xpath(stringclothpricerng)).getText());
 
                         String[] Pricesplit = driver.findElement(By.xpath(stringclothpricerng)).getText().split(" – ");
 
-                        System.out.println("Hightprice" + Pricesplit[0].replace("₹", ""));
-                        System.out.println("Lowest" + Pricesplit[1].replace("₹", ""));
+                        System.out.println("Hightest price: " + Pricesplit[0].replace("₹", ""));
+                        System.out.println("Lowest price :" + Pricesplit[1].replace("₹", ""));
 
 
                         HighestClothPrice = Float.parseFloat(Pricesplit[0].replace("₹", ""));
                         LowestClothPrice = Float.parseFloat(Pricesplit[0].replace("₹", ""));
 
-                        clothesList.add(new clothesList(clothname.getText(), clothtype.getText(), HighestClothPrice, LowestClothPrice, stringclothname, num_pages));
+                        ItemsList.add(new ShoppingItems(clothname.getText(), clothtype.getText(), HighestClothPrice, LowestClothPrice, stringclothname, num_pages));
 //
 
 
@@ -235,11 +237,11 @@ public class SearchitemPage extends MainPage {
                         System.out.println("normal price " + clothprice.getText().replace("₹", ""));
 
 
-                        // clotheList.add(new clothesList(highestclothxpath, highestclothxpath,
+                        // clotheList.add(new ShoppingItems(highestclothxpath, highestclothxpath,
                         // highestclothxpath, highestclothxpath, highestclothxpath));
                         Normalprice = Float.parseFloat(clothprice.getText().replace("₹", ""));
 
-                        clothesList.add(new clothesList(clothname.getText(), clothtype.getText(), Normalprice, 0, stringclothname, num_pages));
+                        ItemsList.add(new ShoppingItems(clothname.getText(), clothtype.getText(), Normalprice, 0, stringclothname, num_pages));
 
                     }
 
@@ -268,14 +270,14 @@ public class SearchitemPage extends MainPage {
                     totalitems++;
                 }
                 System.out.println("Num pages :" + num_pages);
-                System.out.println("ArrayList size " + clothesList.size());
+
 
 
             } while (ExistRightarrow);
 //            while (num_pages <= Pagesize );
             System.out.println("Total items:" + totalitems);
 
-            System.out.println("ArrayList size " + clothesList.size());
+            System.out.println("ArrayList size " + ItemsList.size());
 
         } else {
             System.out.println("THERES NO CLOTHES");
@@ -292,10 +294,13 @@ public class SearchitemPage extends MainPage {
     }
 
 
-    public void sortPrice() {
-        clothesList.sort(Comparator.comparing(a -> a.getClothe_price()));
+    public void sortPriceAsceding() {
+        ItemsList.sort(Comparator.comparing(a -> a.getClothe_price()));
 
-        for (clothesList clothes : clothesList) {
+
+        System.out.println("Sorted Prices lowest to highest");
+
+        for (ShoppingItems clothes : ItemsList) {
             // System.out.println( clothes.getclothe_name());
             System.out.println("Name: " + clothes.clothe_name);
             System.out.println("Type: " + clothes.clothe_type);
@@ -303,96 +308,90 @@ public class SearchitemPage extends MainPage {
             System.out.println("Lowest Price: " + clothes.clothe_lowestprice);
         }
 
-    }
 
-    public void MeanNumber() {
-
-        int len = clothesList.size();
-
-        float median;
-
-
-
-        RegularClothPrice = clothesList.stream()
+        RegularClothPrice = ItemsList.stream()
                 .map(b -> b.getClothe_price())
                 .collect(Collectors.toList());
 
+    }
 
-        //sort the collection
 
-//        sortPrice();
-        //get the index of the median (middle item of a sorted list)
+    public void sortPriceDescending () {
 
-        if (len % 2 != 0)
 
-            median = clothesList.get(len / 2).clothe_price;
-        else // length is even
-            median = clothesList.get((len - 1) / 2).clothe_price + (clothesList.get(len / 2).clothe_price) / 2;
+
+                Comparator.comparing(ShoppingItems::getClothe_price)
+                        .reversed();
+
+
+        System.out.println("Sorted Prices highest to lowest");
+
+
+    }
+        public void MedianNumber() {
+
+        int len = ItemsList.size();
+
+        float median;
+
+        if (RegularClothPrice.size() % 2 == 0) {
+            median = RegularClothPrice.get((RegularClothPrice.size() - 1) / 2);
+        } else {
+            median = (RegularClothPrice.get((RegularClothPrice.size() - 1) / 2) + RegularClothPrice.get(RegularClothPrice.size() / 2)) / 2;
+        }
+
+
+        System.out.println("Median: "+median);
 
         Integer firstIndex = RegularClothPrice.stream().filter(v -> v.equals(median)).map(v -> RegularClothPrice.indexOf(v)).findFirst()
                 .orElse(-1);
 
+
         System.out.println("Index:"+firstIndex.intValue());
         //print the median and it's index
-        System.out.println("Cloth name" + clothesList.get(firstIndex.intValue()).clothe_name + "\n Cloth Price" + clothesList.get(firstIndex.intValue()).clothe_price);
+        System.out.println("Item name: " + ItemsList.get(firstIndex.intValue()).clothe_name + "\nItem Price: " + ItemsList.get(firstIndex.intValue()).clothe_price);
 
-        clickCloth(clothesList.get(firstIndex.intValue()).clothe_icon,clothesList.get(firstIndex.intValue()).page_number_icon);
+        clickCloth(ItemsList.get(firstIndex.intValue()).clothe_icon,ItemsList.get(firstIndex.intValue()).page_number_icon);
 
     }
 
-    public void cheapestClothe() {
+    public void averagePrice()
+
+    {
+
+        double avgPrice = ItemsList.stream().mapToDouble(i -> i.clothe_price).average().getAsDouble();
 
 
-        //        sortPrice();
 
-        System.out.printf("The %s is %.2f \n Makes it the cheapest cloth for this search", clothesList.get(clothesList.size() - 1).clothe_name, clothesList.get(clothesList.size() - 1).clothe_price);
-        ;
-//        System.out.println(clotheList.get(0).clothe_price);
-//        System.out.println(clotheList.get(0).clothe_name);
-//        System.out.println(clotheList.get(0).clothe_lowestprice);
-//        String clothe_page_location=clotheList.get(0).page_number_icon;
-//        System.out.println("clothes_pagination_location="+clothe_page_location);
-/*        int paginationsize = Pagination_number.size();
-        System.out.println("paginationsize: " + paginationsize);
-        if (paginationsize > 0) {
-//            int clothesnumbericon = driver.findElements(By.xpath(clothe_page_location)).size();
-//            System.out.println("clothesnumbericon size: "+clothesnumbericon);
-//            WebElement clothpaginationlocation = wait2.until(ExpectedConditions.elementToBeClickable(By.xpath(clothe_page_location)));
-//            clothpaginationlocation.click();
-//            WebElement clothimg = wait2.until(ExpectedConditions.elementToBeClickable(By.xpath(clotheList.get(0).clothe_lowestprice)));
-//            clothimg.click();
-        } else {
-//            WebElement clothimg = wait2.until(ExpectedConditions.elementToBeClickable(By.xpath(clotheList.get(0).clothe_lowestprice)));
-//            clothimg.click();
-        }*/
+// search for the closet average price
+        Integer indexAvg=StreamSupport.stream(RegularClothPrice.spliterator(), false)
+                .sorted(Comparator.comparingDouble(i -> Math.abs(i - avgPrice))).map(i -> RegularClothPrice.indexOf(i)).findFirst()
+                .orElse(-1);
+
+
+        System.out.println("Index:"+indexAvg.intValue());
+
+
+//        System.out.printf("The Average price is %.2f ",avgPrice);
+
+
+        System.out.println("\nItem with the closet average price\nItem name: " + ItemsList.get(indexAvg.intValue()).clothe_name + "\nItem Price: " + ItemsList.get(indexAvg.intValue()).clothe_price);
+
     }
 
-    public void expensiveclothe() {
-		/*WebDriverWait wait2 = new WebDriverWait(driver, 20);
-		System.out.println("expensive clothes");
-		System.out.println("clothes list size: "+(clotheList.size()));
-		System.out.println(clotheList.get(clotheList.size() - 1).clothe_price);
-		System.out.println(clotheList.get(clotheList.size() - 1).clothe_name);
-		System.out.println(clotheList.get(clotheList.size() - 1).clothe_lowestprice);
-		WebElement icon = wait2.until(
-				ExpectedConditions.elementToBeClickable(By.xpath(clotheList.get(clotheList.size() - 1).clothe_lowestprice)));
+    public void cheapestItem() {
 
-		icon.click();*/
-        WebDriverWait wait2 = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-    /*    System.out.println("paginationsize: " + paginationsize);
-        if (paginationsize > 0) {
-//            int clothesnumbericon = driver.findElements(By.xpath(clothe_page_location)).size();
-//            System.out.println("clothesnumbericon size: "+clothesnumbericon);
-//            WebElement clothpaginationlocation = wait2.until(ExpectedConditions.elementToBeClickable(By.xpath(clothe_page_location)));
-//            clothpaginationlocation.click();
-//            WebElement clothimg = wait2.until(ExpectedConditions.elementToBeClickable(By.xpath(clotheList.get(clotheList.size()-1 ).clothe_lowestprice)));
-//            clothimg.click();
-        } else {
-//            WebElement clothimg = wait2.until(ExpectedConditions.elementToBeClickable(By.xpath(clotheList.get(clotheList.size()-1).clothe_lowestprice)));
-//            clothimg.click();
-        }
-*/
+        System.out.printf("The %s is %.2f \nMakes it the cheapest cloth for this search", ItemsList.get(0).clothe_name, ItemsList.get(0).clothe_price);
+
+//
+    }
+
+    public void expensiveItem() {
+
+        System.out.printf("The %s is %.2f \n Makes it the cheapest cloth for this search", ItemsList.get(ItemsList.size() - 1).clothe_name, ItemsList.get(ItemsList.size() - 1).clothe_price);
+
+
 
     }
 
@@ -420,15 +419,8 @@ public class SearchitemPage extends MainPage {
         wait2 = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait2.until(ExpectedConditions.presenceOfElementLocated(total_products_perpage));
 
-
-        //wait2.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("/html/body/div[2]/div[2]/div[2]/div/nav/ul")));
-
-        // int paginationsize=driver.findElements(By.xpath("//ul[@class='page-numbers']")).size();
-
-
+        //check pagination to click on page the corresponding page or not
         if (isPresenttotal_pagination) {
-
-
 
             String pageNumberxpath = new StringBuilder(pageNumberxpath1).append(String.valueOf(PageLocation)).append(pageNumberxpath2) .toString();;
 //
@@ -438,18 +430,13 @@ public class SearchitemPage extends MainPage {
 
             driver.findElement(By.cssSelector(ClothCss)).click();
 
-
         }
 
-
-        //check pagination to click on page the corresponding page
         else {
             //*[contains(@class,'page-numbers')and contains(text(),*)]
 
 
             driver.findElement(By.cssSelector(ClothCss)).click();
-
-
 
         }
 

@@ -16,7 +16,7 @@ public class ShoppingQA extends Base {
 
     @Test(priority = 2, enabled = true)
 
-    public void ClothSearch() {
+    public void ItetmsSearch() {
 
         searchitemPage.searchItem("shirt");
 
@@ -24,9 +24,9 @@ public class ShoppingQA extends Base {
 
     @Test(priority = 3, enabled = true)
 
-    public void AllClothesFoundSearch() {
+    public void AllItemsFoundSearch() {
 
-        searchitemPage.identifyClothes();
+        searchitemPage.identifyItems();
 
 
     }
@@ -34,9 +34,9 @@ public class ShoppingQA extends Base {
 
     @Test(priority = 4, enabled = true)
 
-    public void SortbyLowestPriceSearch() {
+    public void SortLowestPriceSearch() {
 
-        searchitemPage.sortPrice();
+        searchitemPage.sortPriceAsceding();
 
 
     }
@@ -45,14 +45,39 @@ public class ShoppingQA extends Base {
     @Test(priority = 5, enabled = true)
 
     public void MedianPriceSearch() {
-        searchitemPage.MeanNumber();
+        searchitemPage.MedianNumber();
 
     }
     @Test(priority = 6, enabled = true)
 
-    public void CheapestPriceSeach() {
-        searchitemPage.cheapestClothe();
+    public void CheapestItemSearch() {
+        searchitemPage.cheapestItem();
 
     }
+
+
+    @Test(priority = 6, enabled = true)
+
+    public void MostExpensiveItemSearch() {
+        searchitemPage.expensiveItem();
+
+    }
+
+    @Test(priority = 6, enabled = true)
+
+    public void AvgtemSearch() {
+        searchitemPage.averagePrice();
+
+    }
+
+
+    @Test(priority = 7, enabled = true)
+
+    public void SortHighestPriceSearch() {
+        searchitemPage.sortPriceDescending();
+
+    }
+
+
 
 }
