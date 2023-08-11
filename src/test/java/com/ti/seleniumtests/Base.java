@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class Base {
 
-    protected String baseUrl = "https://shop.demoqa.com/my-account/";
+    protected String baseUrl = "https://shop.demoqa.com/shop/";
     protected String username = "103124";
     protected String password = "gamer$345566";
     Map<String, String> userCredentials = new HashMap<>();

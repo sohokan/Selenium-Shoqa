@@ -64,18 +64,7 @@ public class SearchitemPage extends MainPage {
     public void identifyItems() {
 
 
-        //WebDriverWait wait2 = new WebDriverWait(driver, 5);
-
-        //	List<WebElement> xpath = (List<WebElement>) By.xpath("/html[1]/body[1]/div[2]/div[2]/div[2]/div[1]/div[1]/*");
-
-        //System.out.println(wait2.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html[1]/body[1]/div[2]/div[2]/div[2]/div[1]/div[1]/*"))).getText());
-
-        //wait2.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"noo-site\"]")));
-        //wait2.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html[1]/body[1]/div[2]/div[2]/div[2]/div[1]/div[1]/*")));
         wait2.until(ExpectedConditions.elementToBeClickable(filter_Color));
-
-
-        //driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
 
 
         Pagination_number = driver.findElements(total_pagination);
@@ -83,17 +72,8 @@ public class SearchitemPage extends MainPage {
 
 //        nextRighicon= driver.findElement(Next_rightarrow_xpath);
 
-        //Boolean doenstexit = wait2.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("/html/body/div[1]/div[2]/p"))).size()>0;
 
-        //int items = wait2.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("/html/body/div[2]/div[2]/div[1]/div"))).size();
         Boolean isPresentcloths = (driver.findElements(total_products_perpage)).size() != 0;
-
-        //System.out.println(driver.findElements(total_products_perpage).size());
-
-
-        //Boolean isPresentcloths =	isElementPresent(wait2, "/html/body/div[2]/div[2]/div[1]/div/p", driver);
-
-        //System.out.println(isPresentcloths);
 
 
         if (isPresentcloths)
@@ -355,6 +335,10 @@ public class SearchitemPage extends MainPage {
                 .orElse(-1);
 
 
+
+
+
+
         System.out.println("Index:"+firstIndex.intValue());
         //print the median and it's index
         System.out.println("Item name: " + ItemsList.get(firstIndex.intValue()).clothe_name + "\nItem Price: " + ItemsList.get(firstIndex.intValue()).clothe_price);
@@ -370,7 +354,7 @@ public class SearchitemPage extends MainPage {
         double avgPrice = ItemsList.stream().mapToDouble(i -> i.clothe_price).average().getAsDouble();
 
 
-
+        System.out.println("Average Price: "+avgPrice);
 // search for the closet average price
         Integer indexAvg=StreamSupport.stream(RegularClothPrice.spliterator(), false)
                 .sorted(Comparator.comparingDouble(i -> Math.abs(i - avgPrice))).map(i -> RegularClothPrice.indexOf(i)).findFirst()
@@ -397,11 +381,69 @@ public class SearchitemPage extends MainPage {
 
     public void expensiveItem() {
 
-        System.out.printf("The %s is %.2f \n Makes it the cheapest cloth for this search", ItemsList.get(ItemsList.size() - 1).clothe_name, ItemsList.get(ItemsList.size() - 1).clothe_price);
+        System.out.printf("The %s is %.2f \n Makes it the Most expenisve cloth for this search", ItemsList.get(ItemsList.size() - 1).clothe_name, ItemsList.get(ItemsList.size() - 1).clothe_price);
 
 
 
     }
+
+    public void Filter_Color(String color)
+    {
+
+
+
+//       ItemsList.stream()
+//                .filter(p ->
+//                        p.clothe_name.contains(color.toUpperCase())).
+//     forEach(e ->
+//                        System.out.println(e.clothe_name + " cost: " + e.clothe_price))
+//
+//       ;
+//
+//
+//
+//
+//        ItemsList.stream()
+//
+//                .forEach(
+//                        e -> {
+//                            if (e.clothe_name.contains(color.toUpperCase())) {
+//                                System.out.println(e.clothe_name + " cost: " + e.clothe_price);
+//                            } else {
+//                                System.out.println("Theres no color found");
+//                            }
+//                        }
+//                );
+
+
+//        ItemsList.stream()
+//                .filter(p ->
+//                        p.clothe_name.contains(color.toUpperCase())).findAny().
+//                orElseThrow(() -> new RuntimeException(
+//                        "color not found: " ));
+
+
+        ItemsList.stream()
+                .filter(p -> p.clothe_name.contains(color.toUpperCase()))
+
+
+                .collect(Collectors.collectingAndThen(Collectors.toList(), result -> {
+                    if (result.isEmpty()) System.err.println("No results!!");
+                    return result;
+                })).
+                forEach(e ->
+                        System.out.println(e.clothe_name + " cost: " + e.clothe_price))
+
+        ;
+
+
+
+
+
+
+
+    }
+
 
 
 

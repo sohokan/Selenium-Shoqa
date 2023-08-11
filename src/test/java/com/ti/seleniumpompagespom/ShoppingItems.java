@@ -24,7 +24,7 @@ public class ShoppingItems {
         return clothe_name;
     }
 
-    public void setClothe_name(String clothe_name) {
+    public void setClothe_name() {
         this.clothe_name = clothe_name;
     }
 
@@ -32,7 +32,7 @@ public class ShoppingItems {
         return clothe_type;
     }
 
-    public void setClothe_type(String clothe_type) {
+    public void setClothe_type() {
         this.clothe_type = clothe_type;
     }
 
@@ -40,7 +40,7 @@ public class ShoppingItems {
         return clothe_price;
     }
 
-    public void setClothe_price(float clothe_price) {
+    public void setClothe_price() {
         this.clothe_price = clothe_price;
     }
 
@@ -48,7 +48,7 @@ public class ShoppingItems {
         return clothe_lowestprice;
     }
 
-    public void setClothe_lowestprice(float clothe_lowestprice) {
+    public void setClothe_lowestprice() {
         this.clothe_lowestprice = clothe_lowestprice;
     }
 
@@ -56,7 +56,7 @@ public class ShoppingItems {
         return clothe_icon;
     }
 
-    public void setClothe_icon(String clothe_icon) {
+    public void setClothe_icon() {
         this.clothe_icon = clothe_icon;
     }
 
@@ -64,7 +64,7 @@ public class ShoppingItems {
         return page_number_icon;
     }
 
-    public void setPage_number_icon(int page_number_icon) {
+    public void setPage_number_icon() {
         this.page_number_icon = page_number_icon;
     }
 }

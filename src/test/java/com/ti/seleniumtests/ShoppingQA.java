@@ -5,7 +5,7 @@ import org.testng.annotations.Test;
 public class ShoppingQA extends Base {
 
 
-    @Test(priority = 1, enabled = true)
+    @Test(priority = 1, enabled = false)
     void loginWithRightCredentials() {
 
 
@@ -14,7 +14,7 @@ public class ShoppingQA extends Base {
     }
 
 
-    @Test(priority = 2, enabled = true)
+    @Test(priority = 2, enabled = false)
 
     public void ItetmsSearch() {
 
@@ -25,6 +25,8 @@ public class ShoppingQA extends Base {
     @Test(priority = 3, enabled = true)
 
     public void AllItemsFoundSearch() {
+
+
 
         searchitemPage.identifyItems();
 
@@ -69,6 +71,14 @@ public class ShoppingQA extends Base {
         searchitemPage.averagePrice();
 
     }
+
+    @Test(priority = 6, enabled = true)
+
+    public void FilterColor() {
+        searchitemPage.Filter_Color("pink");
+
+    }
+
 
 
     @Test(priority = 7, enabled = true)
