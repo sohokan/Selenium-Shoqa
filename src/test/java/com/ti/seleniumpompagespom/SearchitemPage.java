@@ -25,7 +25,7 @@ public class SearchitemPage extends MainPage {
     private By Next_rightarrow_xpath = By.cssSelector(".arrow_carrot-2right");
 
 
-    /*   (//div[@class='noo-product-inner'])[*]*/
+
     private By total_pagination = By.xpath("//*[contains(@class,'page-numbers')and contains(text(),*)]");
     private By no_Products_Msg = By.xpath("//p [contains(@class, 'no-products-found')]");
 
@@ -70,14 +70,14 @@ public class SearchitemPage extends MainPage {
         Pagination_number = driver.findElements(total_pagination);
         Pagesize = Pagination_number.size();
 
-//        nextRighicon= driver.findElement(Next_rightarrow_xpath);
+//
 
 
         Boolean isPresentcloths = (driver.findElements(total_products_perpage)).size() != 0;
 
 
         if (isPresentcloths)
-        //((wait2.until(ExpectedConditions.presenceOfAllElementsLocatedBy(total_products_perpage)).size())>0)
+
         {
 
             WebElement clothname;
@@ -105,8 +105,7 @@ public class SearchitemPage extends MainPage {
             float Normalprice;
 
 
-            // System.out.println(
-            // (driver.findElements(By.xpath("/html/body/div[1]/div[2]/p")).getText()));
+
             int num_pages = 1;
             int totalitems = 0;
             System.out.println("Total pages:" + Pagesize);
@@ -130,11 +129,11 @@ public class SearchitemPage extends MainPage {
 
                     String stringclothname = new StringBuilder(clothnamestr1).append(item_num).append(clothnamestr2)
                             .toString();
-//                System.out.println(stringclothname);
+
 
                     String stringclothtype = new StringBuilder(clothtypestr1).append(item_num).append(clothtypestr2)
                             .toString();
-//                System.out.println(stringclothtype);
+
 
                     String clothimg = new StringBuilder("/div[contains(@class,'noo-product-thumbnail')])[").append(item_num)
                             .append("]").toString();
@@ -144,7 +143,7 @@ public class SearchitemPage extends MainPage {
 
                     String stringclothprice = new StringBuilder(clothprice1).append(item_num).append(clothprice2)
                             .toString();
-//               System.out.println(stringclothprice);
+
                     String normalprice =
                             new StringBuilder("(//div[contains(@class,'noo-product-inner')])[").append(item_num).append("]//child::span[contains(@class,'amount')]")
                                     .toString();
@@ -183,11 +182,7 @@ public class SearchitemPage extends MainPage {
                         NewClothPrice = Float.parseFloat(setNewPrice.get(setNewPrice.size() - 1).replace("₹", ""));
 
 
-//                        System.out.println("Old price"+driver.findElement(By.xpath(highestclothxpath)).getText());
-//                         System.out.println("New price"+clothprice.getText());
-//
-//                    clotheList.add(new ShoppingItems(clothname.getText(), clothtype.getText(), clothprice.getText(),
-//                            clothimg, clothicon,pagenumbericon));
+
 
                         ItemsList.add(new ShoppingItems(clothname.getText(), clothtype.getText(), NewClothPrice, OldClothPrice, stringclothname, num_pages));
 
@@ -263,11 +258,10 @@ public class SearchitemPage extends MainPage {
             System.out.println("THERES NO CLOTHES");
 
             System.out.println(wait2.until(ExpectedConditions.presenceOfElementLocated(no_Products_Msg)).getText());
-            //System.out.println(driver.findElements(By.xpath("/html/body/div[1]/div[2]/p")).getText());
             System.out.println("exit");
 
             System.exit(-1);
-//            driver.close();
+
 
 
         }
@@ -281,11 +275,11 @@ public class SearchitemPage extends MainPage {
         System.out.println("Sorted Prices lowest to highest");
 
         for (ShoppingItems clothes : ItemsList) {
-            // System.out.println( clothes.getclothe_name());
+
             System.out.println("Name: " + clothes.clothe_name);
             System.out.println("Type: " + clothes.clothe_type);
             System.out.println("Normal Price: " + clothes.clothe_price);
-//            System.out.println("Lowest Price: " + clothes.clothe_lowestprice);
+
         }
 
 
@@ -311,7 +305,7 @@ public class SearchitemPage extends MainPage {
             System.out.println("Name: " + clothes.clothe_name);
             System.out.println("Type: " + clothes.clothe_type);
             System.out.println("Normal Price: " + clothes.clothe_price);
-//            System.out.println("Lowest Price: " + clothes.clothe_lowestprice);
+
         }
 
 
@@ -340,7 +334,7 @@ public class SearchitemPage extends MainPage {
 
 
         System.out.println("Index:"+firstIndex.intValue());
-        //print the median and it's index
+
         System.out.println("Item name: " + ItemsList.get(firstIndex.intValue()).clothe_name + "\nItem Price: " + ItemsList.get(firstIndex.intValue()).clothe_price);
 
         clickCloth(ItemsList.get(firstIndex.intValue()).clothe_icon,ItemsList.get(firstIndex.intValue()).page_number_icon);
@@ -355,7 +349,7 @@ public class SearchitemPage extends MainPage {
 
 
         System.out.println("Average Price: "+avgPrice);
-// search for the closet average price
+          // search for the closet average price
         Integer indexAvg=StreamSupport.stream(RegularClothPrice.spliterator(), false)
                 .sorted(Comparator.comparingDouble(i -> Math.abs(i - avgPrice))).map(i -> RegularClothPrice.indexOf(i)).findFirst()
                 .orElse(-1);
@@ -364,7 +358,7 @@ public class SearchitemPage extends MainPage {
         System.out.println("Index:"+indexAvg.intValue());
 
 
-//        System.out.printf("The Average price is %.2f ",avgPrice);
+
 
 
         System.out.println("\nItem with the closet average price\nItem name: " + ItemsList.get(indexAvg.intValue()).clothe_name + "\nItem Price: " + ItemsList.get(indexAvg.intValue()).clothe_price);
@@ -391,36 +385,6 @@ public class SearchitemPage extends MainPage {
     {
 
 
-
-//       ItemsList.stream()
-//                .filter(p ->
-//                        p.clothe_name.contains(color.toUpperCase())).
-//     forEach(e ->
-//                        System.out.println(e.clothe_name + " cost: " + e.clothe_price))
-//
-//       ;
-//
-//
-//
-//
-//        ItemsList.stream()
-//
-//                .forEach(
-//                        e -> {
-//                            if (e.clothe_name.contains(color.toUpperCase())) {
-//                                System.out.println(e.clothe_name + " cost: " + e.clothe_price);
-//                            } else {
-//                                System.out.println("Theres no color found");
-//                            }
-//                        }
-//                );
-
-
-//        ItemsList.stream()
-//                .filter(p ->
-//                        p.clothe_name.contains(color.toUpperCase())).findAny().
-//                orElseThrow(() -> new RuntimeException(
-//                        "color not found: " ));
 
 
         ItemsList.stream()
@@ -469,7 +433,7 @@ public class SearchitemPage extends MainPage {
         wait2 = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait2.until(ExpectedConditions.presenceOfElementLocated(total_products_perpage));
 
-        //check pagination to click on page the corresponding page or not
+        //check pagination to click on page the corresponding page or else just select the item
         if (isPresenttotal_pagination) {
 
             String pageNumberxpath = new StringBuilder(pageNumberxpath1).append(String.valueOf(PageLocation)).append(pageNumberxpath2) .toString();;
@@ -483,7 +447,7 @@ public class SearchitemPage extends MainPage {
         }
 
         else {
-            //*[contains(@class,'page-numbers')and contains(text(),*)]
+
 
 
             driver.findElement(By.cssSelector(ClothCss)).click();

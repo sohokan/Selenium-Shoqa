@@ -51,6 +51,8 @@ public class Base {
     public void addCookies()
 
     {
+
+        //seems the add items to chekout cookies partially work the rest of the comments lines are for the login which doenst work
         JavascriptExecutor js = (JavascriptExecutor) DriverFactory.getInstance().getDriver();
 
         DriverFactory.getInstance().getDriver().manage().deleteAllCookies();
