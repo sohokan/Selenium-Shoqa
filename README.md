@@ -1,7 +1,9 @@
 # Selenium-Shoqa
 java automation for shop  qa website
-added searh function
-find items based on search
-Store items in a list
-Sort by price
+*added search function
+*find items based on search
+*Store items in an object list
+*Sort by price
+*Average price
+*Filter price
 
