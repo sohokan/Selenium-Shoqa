@@ -13,11 +13,4 @@ public class MainPage {
     WebDriver driver = DriverFactory.getInstance().getDriver();
 
 
-
-
-
-
-
-
-
 }
